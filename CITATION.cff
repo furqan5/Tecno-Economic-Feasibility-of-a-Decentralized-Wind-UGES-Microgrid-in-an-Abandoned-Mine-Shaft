@@ -1,0 +1,57 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Techno-Economic Feasibility of a Decentralized Wind-UGES
+  Microgrid in an Abandoned Mine Shaft
+message: >-
+  If you use this software, please cite it using these
+  metadata.
+type: software
+authors:
+  - given-names: Furqan
+    family-names: Shakeel
+    email: furqanshakeel5@outlook.com
+    orcid: 'https://orcid.org/0009-0004-7819-2492'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20742345
+repository-code: >-
+  https://github.com/furqan5/Tecno-Economic-Feasibility-of-a-Decentralized-Wind-UGES-Microgrid-in-an-Abandoned-Mine-Shaft
+abstract: >-
+  Reproducible analysis code for the feasibility study of a
+  50 MW wind farm paired with a 5 MW Underground Gravity
+  Energy Storage (UGES) retrofit in a 494 m abandoned coal
+  shaft at Jhimpir, Pakistan. Includes grid load flow,
+  energy-management dispatch, shaft-foundation settlement,
+  structural verification, wire-rope sizing, strike
+  survivability, and life-cycle embodied-carbon models.
+keywords:
+  - underground gravity energy storage
+  - UGES
+  - wind energy
+  - long-duration energy storage
+  - microgrid
+  - techno-economic analysis
+license: MIT
+version: 1.0.0
+date-released: '2026-06-18'
+references:
+  - type: article
+    title: >-
+      Techno-Economic Feasibility of a Decentralized Wind-UGES Microgrid in an
+      Abandoned Mine Shaft: Energy Security Under Conflict and Specialized
+      Applications
+    authors:
+      - given-names: Furqan
+        family-names: Shakeel
+        affiliation: >-
+          Institute of Energy & Environmental Engineering, University of the
+          Punjab, Lahore, Pakistan
+    notes: >-
+      Associated manuscript. Dr. Syed Sheraz Daood and Dr. Rizwan Haider
+      (Institute of Energy & Environmental Engineering, University of the
+      Punjab, Lahore) supervised the work and contributed to the
+      conceptualization and refinement of the study; they did not contribute to
+      the software in this repository.

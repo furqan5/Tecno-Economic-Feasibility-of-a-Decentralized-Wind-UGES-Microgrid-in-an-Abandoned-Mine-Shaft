@@ -83,7 +83,28 @@ Note: `openseespy` (used only by `settlement/`) ships as a binary wheel for
 mainstream Linux, macOS, and Windows builds. All other modules depend only on
 NumPy, matplotlib, pandapower, and Pillow.
 
-## Running
+## Running the full suite
+
+A master script at the repository root runs every analysis module in sequence
+and prints a pass/fail summary:
+
+```
+python run_simulation.py
+```
+
+Each module is executed as a standalone process from its own folder, so it
+behaves exactly as it does when run individually — there are no shared-state
+or import-order effects, and results are identical either way. The script exits
+with status `0` only if every module completes successfully, which makes it
+suitable for a continuous-integration check.
+
+To list the modules without running them:
+
+```
+python run_simulation.py --list
+```
+
+## Running individual modules
 
 Each script is self-contained and runs from its own folder with no
 configuration or environment variables:
