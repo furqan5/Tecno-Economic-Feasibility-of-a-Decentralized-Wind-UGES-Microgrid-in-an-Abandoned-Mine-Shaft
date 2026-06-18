@@ -1,5 +1,8 @@
 # Techno-Economic Feasibility of a Decentralized Wind–UGES Microgrid in an Abandoned Mine Shaft
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20742345.svg)](https://doi.org/10.5281/zenodo.20742345)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Reproducible analysis code for the feasibility study of a 50 MW wind farm
 paired with a 5 MW Underground Gravity Energy Storage (UGES) retrofit in a
 494 m abandoned coal shaft at Jhimpir, Pakistan.
@@ -10,24 +13,37 @@ foundation settlement, structural verification, wire-rope sizing, strike
 survivability, and life-cycle embodied carbon. Every figure and headline number
 in the paper can be regenerated from these scripts.
 
+## Citation
+
+If you use this code, please cite the archived release:
+
+> Shakeel, F. (2026). *Techno-Economic Feasibility of a Decentralized Wind-UGES
+> Microgrid in an Abandoned Mine Shaft* (v1.0.0). Zenodo.
+> https://doi.org/10.5281/zenodo.20742345
+
+A `CITATION.cff` file is included so GitHub and Zenodo can generate citation
+text automatically.
+
 ## Repository layout
 
 ```
-jhimpir_wind_uges/
-├── loadflow/       Steady-state grid load flow (pandapower, Newton–Raphson)
+.
+├── run_simulation.py   Master script: runs every module in sequence
+├── loadflow/           Steady-state grid load flow (pandapower, Newton–Raphson)
 │   └── loadflow.py
-├── ems/            24-hour rule-based energy-management dispatch (NumPy)
+├── ems/                24-hour rule-based energy-management dispatch (NumPy)
 │   └── ems_dispatch.py
-├── settlement/     Headframe-foundation settlement (OpenSeesPy, plane strain)
+├── settlement/         Headframe-foundation settlement (OpenSeesPy, plane strain)
 │   └── settlement.py
-├── structural/     Closed-form structural checks + wire-rope factor of safety
+├── structural/         Closed-form structural checks + wire-rope factor of safety
 │   ├── structural.py
 │   └── rope_fos.py
-├── resilience/     Monte-Carlo strike-survivability and islanding endurance
+├── resilience/         Monte-Carlo strike-survivability and islanding endurance
 │   └── resilience.py
-├── lca/            Cradle-to-gate embodied-carbon life-cycle assessment
+├── lca/                Cradle-to-gate embodied-carbon life-cycle assessment
 │   └── lca.py
 ├── requirements.txt
+├── CITATION.cff
 ├── LICENSE
 └── README.md
 ```
@@ -93,8 +109,8 @@ python run_simulation.py
 ```
 
 Each module is executed as a standalone process from its own folder, so it
-behaves exactly as it does when run individually — there are no shared-state
-or import-order effects, and results are identical either way. The script exits
+behaves exactly as it does when run individually — there are no shared-state or
+import-order effects, and results are identical either way. The script exits
 with status `0` only if every module completes successfully, which makes it
 suitable for a continuous-integration check.
 
@@ -104,10 +120,13 @@ To list the modules without running them:
 python run_simulation.py --list
 ```
 
-## Running individual modules
+The `settlement/` module uses OpenSeesPy and takes noticeably longer than the
+others; this is expected, not a failure. Modules that produce figures write
+them into the folder they run from.
 
-Each script is self-contained and runs from its own folder with no
-configuration or environment variables:
+## Running modules individually
+
+Each script is self-contained and can also be run on its own from its folder:
 
 ```
 python loadflow/loadflow.py
@@ -119,9 +138,6 @@ python resilience/resilience.py
 python lca/lca.py
 ```
 
-Scripts print their key results to standard output; those that produce figures
-write a TIFF into the working directory.
-
 ## Notes on reproducibility
 
 - Model inputs (geometry, material properties, tariffs, discount rate) are set
@@ -131,11 +147,6 @@ write a TIFF into the working directory.
   other geotechnical inputs are taken from the site material set.
 - The Monte-Carlo resilience model uses a fixed random seed for repeatable
   output.
-
-## Citation
-
-If you use this code, please cite the associated manuscript and this
-repository's archived release (DOI to be added on Zenodo deposit).
 
 ## License
 
