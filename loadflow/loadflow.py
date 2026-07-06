@@ -87,8 +87,19 @@ print("="*60)
 print("Jhimpir Wind-UGES interconnection - pandapower load flow")
 
 print("="*60)
+_res = {}
 for sc in ("charge", "discharge"):
     net = build(sc)
-    report(net, sc)
+    _res[sc] = report(net, sc)   # (export_MW, pcc_pct, xfmr_pct)
+
+import os, csv
+_dd = os.path.join(os.path.dirname(__file__), "..", "figure_data")
+os.makedirs(_dd, exist_ok=True)
+with open(os.path.join(_dd, "fig4_loadflow.csv"), "w", newline="") as _f:
+    _w = csv.writer(_f); _w.writerow(["state", "export_MW", "pcc_pct", "xfmr_pct"])
+    _w.writerow(["Charging",    f"{_res['charge'][0]:.2f}",    f"{_res['charge'][1]:.2f}",    f"{_res['charge'][2]:.2f}"])
+    _w.writerow(["Discharging", f"{_res['discharge'][0]:.2f}", f"{_res['discharge'][1]:.2f}", f"{_res['discharge'][2]:.2f}"])
+print("wrote figure_data/fig4_loadflow.csv")
+
 
 

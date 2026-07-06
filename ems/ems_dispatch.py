@@ -86,24 +86,12 @@ _,SOCr,_ = dispatch(reserve_floor=0.40)
 print(f"\nStrategic-reserve override (floor 40%): SOC never drops below "
       f"{SOCr.min()*100:.0f}% (vs {SOC.min()*100:.0f}% commercial).")
 
-# ---------------- figure ----------------
-try:
-    import matplotlib
-    matplotlib.use('Agg'); import matplotlib.pyplot as plt
-    h=np.arange(24)
-    fig,ax1=plt.subplots(figsize=(3.4,2.4),dpi=300); plt.rcParams['font.family']='serif'
-    ax1.bar(h,P,color=np.where(P>=0,'#1a9850','#b22222'),width=0.8,label='UGES power')
-    ax1.axhline(0,color='k',lw=0.5); ax1.set_xlabel('Hour',fontsize=8)
-    ax1.set_ylabel('UGES power (MW)\n+discharge / -charge',fontsize=8)
-    ax1.tick_params(labelsize=7)
-    ax2=ax1.twinx()
-    ax2.plot(h,SOC*100,'o-',color='#2166ac',ms=2.4,lw=1.3,label='SOC')
-    ax2.plot(h,tariff,':',color='#762a83',lw=1.1,label='tariff')
-    ax2.set_ylabel('SOC (%)  /  tariff (PKR/kWh)',fontsize=8); ax2.tick_params(labelsize=7)
-    ax2.set_ylim(0,100)
-    l1,la1=ax1.get_legend_handles_labels(); l2,la2=ax2.get_legend_handles_labels()
-    ax1.legend(l1+l2,la1+la2,fontsize=5.6,frameon=False,loc='upper center',ncol=2)
-    plt.tight_layout(); plt.savefig('ems_dispatch.png',bbox_inches='tight')
-    print("\nfigure saved: ems_dispatch.png")
-except Exception as e:
-    print("plot skipped:",e)
+# ---------------- figure data export ----------------
+import os, csv
+_dd = os.path.join(os.path.dirname(__file__), "..", "figure_data")
+os.makedirs(_dd, exist_ok=True)
+with open(os.path.join(_dd, "fig5_ems.csv"), "w", newline="") as _f:
+    _w = csv.writer(_f); _w.writerow(["hour", "P_MW", "SOC_pct", "tariff_PKR"])
+    for _h in range(24):
+        _w.writerow([_h, f"{P[_h]:.4f}", f"{SOC[_h]*100:.2f}", f"{tariff[_h]:.1f}"])
+print("wrote figure_data/fig5_ems.csv")

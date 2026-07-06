@@ -1,7 +1,7 @@
+# Numerical models only. Publication figures are produced in MATLAB
+# (make_mpce_figures.m), which reads figure_data/*.csv - no Python plotting.
 numpy>=1.24
 numpy-financial>=1.0
-matplotlib>=3.7
 pandapower>=2.14
 openseespy>=3.5
-pillow>=10.0
 openpyxl>=3.1

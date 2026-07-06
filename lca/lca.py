@@ -42,13 +42,16 @@ PISTON_REBAR_RATIO = 150.0  # cell I25
 
 # Discrete steel masses (tonnes)
 HEADFRAME_STEEL_TONNE = 76.0    # cell I23  -- UPDATE after redesign
-KOEPE_SHEAVE_TONNE    = 222.0   # cell I28 (x2 sheaves, forged AISI 4340)
+KOEPE_SHEAVE_TONNE    = 350.0   # cell H28 (x2 sheaves, forged AISI 4340) [v1.0.1: was 222.0]
 
-# Wire rope: 8 x 48 mm ropes over the shaft. 48 mm 6-strand IWRC rope is
-# ~9.9 kg/m. Effective suspended length per rope ~ shaft depth (494 m).
-ROPE_LINEAR_MASS = 9.9     # kg/m  (48 mm 6x36 IWRC, manufacturer datasheet range 9.5-10.3)
-ROPE_COUNT       = 8
-ROPE_LENGTH_M    = 494.0
+# Wire rope: 36 x 60 mm ropes on the Koepe loop (piston side + counterweight
+# side + sheave arc + terminations ~ 1038 m per rope). 60 mm 6x36 IWRC rope
+# is ~0.00433*d^2 = 15.59 kg/m (Feyrer 2015 / ISO 2408 nominal mass).
+# [v1.0.1: corrected from the superseded 8 x 48 mm x 494 m configuration,
+#  which understated rope steel by ~543 t.]
+ROPE_LINEAR_MASS = 15.59   # kg/m  (60 mm 6x36 IWRC)
+ROPE_COUNT       = 36
+ROPE_LENGTH_M    = 1038.0
 WIRE_ROPE_TONNE  = ROPE_LINEAR_MASS * ROPE_COUNT * ROPE_LENGTH_M / 1000.0
 
 # Derived masses (tonnes)
@@ -103,7 +106,7 @@ INVENTORY = [
     ("rebar",           m_piston_rebar,    "Piston reinforcement"),
     ("structural_steel",HEADFRAME_STEEL_TONNE, "Headframe structural steel"),
     ("forged_steel",    KOEPE_SHEAVE_TONNE,    "Koepe sheave (x2, forged)"),
-    ("wire_rope",       WIRE_ROPE_TONNE,       "Hoist wire rope (8 x 48 mm)"),
+    ("wire_rope",       WIRE_ROPE_TONNE,       "Hoist wire rope (36 x 60 mm)"),
 ]
 
 # ----------------------------------------------------------------------------
@@ -179,49 +182,3 @@ if __name__ == "__main__":
         json.dump(summary, f, indent=2)
 
     print("\nWrote: uges_lca_results.csv, uges_lca_summary.json")
-
-
-def make_chart():
-    """Generate a publication-quality stacked breakdown chart (both scenarios)."""
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    mats = ["concrete_C40_50", "rebar", "structural_steel", "forged_steel", "wire_rope"]
-    labels = ["Concrete C40/50", "Rebar", "Structural steel", "Forged steel (sheave)", "Wire rope"]
-    colors = ["#6E7B8B", "#C44E52", "#4C72B0", "#8C8C00", "#55A868"]
-
-    data = {}
-    for sc in ("recycled", "virgin"):
-        rows, _ = run_lca(sc)
-        roll = material_rollup(rows)
-        data[sc] = [roll.get(m, 0.0) for m in mats]
-
-    fig, ax = plt.subplots(figsize=(7, 4.5))
-    x = [0, 1]
-    bottoms = [0.0, 0.0]
-    for i, m in enumerate(mats):
-        vals = [data["recycled"][i], data["virgin"][i]]
-        ax.bar(x, vals, bottom=bottoms, width=0.55, label=labels[i], color=colors[i],
-               edgecolor="white", linewidth=0.6)
-        bottoms = [bottoms[0] + vals[0], bottoms[1] + vals[1]]
-
-    for xi, sc in zip(x, ("recycled", "virgin")):
-        tot = sum(data[sc])
-        ax.text(xi, tot + 30, f"{tot:,.0f}", ha="center", va="bottom",
-                fontsize=11, fontweight="bold")
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(["Recycled steel\nroute (local mix)", "Virgin steel\nroute (upper bound)"])
-    ax.set_ylabel("Embodied carbon, cradle-to-gate (t CO$_2$-eq)")
-    ax.set_title("UGES structure embodied carbon by material (GWP-100, A1\u2013A3)")
-    ax.legend(loc="upper left", fontsize=8, frameon=False)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.set_ylim(0, max(sum(data["virgin"]), sum(data["recycled"])) * 1.18)
-    fig.tight_layout()
-    fig.savefig("uges_lca_breakdown.png", dpi=300, bbox_inches="tight")
-    print("Wrote: uges_lca_breakdown.png")
-
-
-make_chart()

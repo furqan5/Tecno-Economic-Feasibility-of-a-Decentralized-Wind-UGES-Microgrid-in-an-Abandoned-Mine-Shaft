@@ -1,0 +1,10 @@
+component,material,mass_t,ef_kgco2e_per_kg,gwp_tco2e,share_pct
+Shaft liner concrete,concrete_C40_50,3871.7,0.151,584.6,20.5
+Piston concrete,concrete_C40_50,996.6,0.151,150.5,5.3
+Headframe foundation concrete,concrete_C40_50,718.0,0.151,108.4,3.8
+Liner reinforcement,rebar,193.6,1.4,271.0,9.5
+Piston reinforcement,rebar,62.3,1.4,87.2,3.1
+Headframe structural steel,structural_steel,76.0,1.13,85.9,3.0
+"Koepe sheave (x2, forged)",forged_steel,350.0,1.55,542.5,19.0
+Hoist wire rope (36 x 60 mm),wire_rope,582.6,1.75,1019.5,35.8
+TOTAL,,,,2849.6,100.0

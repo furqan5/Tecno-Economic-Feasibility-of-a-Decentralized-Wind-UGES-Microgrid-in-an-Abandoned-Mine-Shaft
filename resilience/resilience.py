@@ -1,6 +1,6 @@
 """
 Strike-survivability and islanding-endurance model for the Jhimpir Wind-UGES paper.
-Section IX-B. Pure NumPy + matplotlib. Deterministic (seeded).
+Section IX-B. Pure NumPy. Deterministic (seeded).
 
 Part 1 - Survivability: a salvo of M independent precision strikes is allocated
 as evenly as possible across n storage nodes holding equal shares of a fixed
@@ -21,9 +21,6 @@ hoist and turbine remain functional (the survivability model covers the
 inventory question).
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 rng = np.random.default_rng(42)
 
@@ -119,29 +116,18 @@ for name, L in loads:
     results.append((name, L, auton, p72))
     print(f" {name:<24} L={L:>5.2f} MW | zero-wind autonomy {auton:6.1f} h | P(72 h) = {p72*100:5.1f}%")
 
-# ---------------- Figure ----------------
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.5, 4.6), dpi=300)
-plt.rcParams['font.family'] = 'serif'
-for kname, a in arch.items():
-    ax1.plot(Ms, [exp_surv(M, a['n'], a['p']) * 100 for M in Ms],
-             a['ls'], color=a['c'], lw=1.4, label=kname, marker='o', ms=2.5)
-ax1.set_xlabel('Salvo size M (strikes)', fontsize=8)
-ax1.set_ylabel('Expected surviving\nenergy inventory (%)', fontsize=8)
-ax1.set_title('(a) Strike survivability  ($p_{AG}$=0.8, $p_{sh}$=0.05)', fontsize=8)
-ax1.legend(fontsize=6.2, frameon=False)
-ax1.tick_params(labelsize=7); ax1.grid(alpha=0.3, lw=0.4)
-ax1.set_xlim(0, 10); ax1.set_ylim(0, 102)
-
-names = [r[0] for r in results]; p72s = [r[3] * 100 for r in results]
-autons = [r[2] for r in results]
-bars = ax2.barh(names, p72s, color=['#2166ac', '#b22222', '#1a9850'], height=0.55)
-for b, a_h in zip(bars, autons):
-    ax2.text(b.get_width() + 1.5, b.get_y() + b.get_height()/2,
-             f'{b.get_width():.0f}%  ({a_h:.1f} h calm buffer)', va='center', fontsize=6.2)
-ax2.set_xlabel('P(72 h uninterrupted islanded supply) (%)', fontsize=8)
-ax2.set_title('(b) Islanding endurance at 1.083 MWh + 2.5 MW turbine', fontsize=8)
-ax2.tick_params(labelsize=7); ax2.set_xlim(0, 118)
-ax2.grid(alpha=0.3, lw=0.4, axis='x')
-plt.tight_layout()
-plt.savefig('resilience_fig.png', bbox_inches='tight')
-print("\nfigure saved: resilience_fig.png")
+# ---------------- figure data export ----------------
+import os, csv
+_dd = os.path.join(os.path.dirname(__file__), "..", "figure_data")
+os.makedirs(_dd, exist_ok=True)
+with open(os.path.join(_dd, "fig7a_survivability.csv"), "w", newline="") as _f:
+    _w = csv.writer(_f); _w.writerow(["M", "AG1", "AG5", "UG1", "UG5"])
+    for _M in Ms:
+        _w.writerow([_M,
+            f"{exp_surv(_M,1,p_AG)*100:.2f}", f"{exp_surv(_M,5,p_AG)*100:.2f}",
+            f"{exp_surv(_M,1,p_sh)*100:.2f}", f"{exp_surv(_M,5,p_sh)*100:.2f}"])
+with open(os.path.join(_dd, "fig7b_islanding.csv"), "w", newline="") as _f:
+    _w = csv.writer(_f); _w.writerow(["load", "P72_pct", "buffer_h"])
+    for _name, _L, _auton, _p72 in results:
+        _w.writerow([_name, f"{_p72*100:.2f}", f"{_auton:.1f}"])
+print("wrote figure_data/fig7a_survivability.csv, fig7b_islanding.csv")

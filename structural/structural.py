@@ -60,6 +60,46 @@ print("PISTON BUCKLING  Pcr=%.1f GN -> load factor %.0f (>800 target; guided in 
 print("SHEAVE  AISI 4340, max stress 10.7 MPa -> FoS %.0f (fy 470 MPa)" % (fy_4340/10.72e6))
 
 # ---------- wire ropes ----------
-print("ROPES  8 x 48 mm; design FoS 8 per selected rope MBL (operating load %.2f MN total)"
-      % (W/1e6))
+# ---- v1.0.1 additions -------------------------------------------------
+# (a) Piston thermal stress: fully-restrained upper bound for the 10 degC
+#     casting-to-operation differential. The suspended piston contracts
+#     largely unrestrained, so in-service stress is lower than this bound.
+alpha_c   = 1.0e-5            # 1/degC, concrete thermal expansion
+dT        = 10.0              # degC (35 surface casting -> 25 shaft)
+sig_th    = E_c * alpha_c * dT
+f_ctm     = 3.5e6             # C40/50 mean tensile strength, EN 1992-1-1 Tab 3.1
+print("THERMAL  fully-restrained bound sigma = E*alpha*dT = %.2f MPa "
+      "(< f_ctm %.1f MPa, C40/50); suspended piston is largely unrestrained"
+      % (sig_th/1e6, f_ctm/1e6))
+# (b) Sheave-platform vertical deflection: elastic shortening of the four
+#     columns under the peak dynamic load. H_FRAME is an assumed frame
+#     height pending confirmation from the headframe general arrangement.
+H_FRAME  = 20.0               # m (ASSUMED - confirm against GA drawing)
+P_peak   = 17.95e6            # N
+delta_pl = P_peak * H_FRAME / (4.0 * A * E_steel)
+print("PLATFORM elastic column shortening delta = P*H/(4AE) = %.1f mm "
+      "(H_FRAME = %.0f m assumed)" % (delta_pl*1e3, H_FRAME))
+print("ROPES    see structural/rope_fos.py: 36 x 60 mm, FoS 6.7 vs 12.5 MN operating load")
 print("\nAll governing checks reproduce the manuscript design margins.")
+
+# ---------------- figure data export (Fig 6: factors of safety) ----------
+import os, csv
+_K_r, _Rr_r, _Lr = 0.330, 1960, 494.0            # rope: same basis as rope_fos.py
+_mbf_r = 36 * _K_r * 60**2 * _Rr_r               # N, 36 x 60 mm, grade 1960
+_W_r = 996.6e3 * 9.81 + 36 * 0.00433 * 60**2 * _Lr * 9.81
+_fos_rope = _mbf_r / _W_r
+# fos_min = governing code / design minimum for each check
+_rows = [
+    ("Headframe column",   FoS_frame,          1.67),   # steel, ~1/0.6 utilisation
+    ("Hoist ropes 36x60",  _fos_rope,          6.0),    # mine-hoist rope code band 6-7
+    ("Koepe sheave",       fy_4340 / 10.72e6,  5.0),
+    ("Piston self-weight", FoS_comp,           3.0),
+    ("Piston buckling",    Pcr / W,            800.0),  # manuscript Euler target
+]
+_dd = os.path.join(os.path.dirname(__file__), "..", "figure_data")
+os.makedirs(_dd, exist_ok=True)
+with open(os.path.join(_dd, "fig6_structural.csv"), "w", newline="") as _f:
+    _w = csv.writer(_f); _w.writerow(["component", "fos", "fos_min"])
+    for _n, _fo, _mn in _rows:
+        _w.writerow([_n, f"{_fo:.2f}", f"{_mn:g}"])
+print("wrote figure_data/fig6_structural.csv")

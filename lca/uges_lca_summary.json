@@ -1,0 +1,8 @@
+{
+  "scope": "Cradle-to-gate (A1-A3), UGES civil/structural materials only",
+  "method": "GWP-100 (IPCC AR5/2013)",
+  "ef_database": "ICE v3.0 (Circular Ecology / Hammond & Jones, 2019) + forging/drawing uplifts",
+  "total_recycled_route_tco2e": 2849.6,
+  "total_virgin_route_tco2e": 4208.4,
+  "note": "Original manuscript figure of 290,309 tCO2e is ~130x this result and is a scale/units error."
+}

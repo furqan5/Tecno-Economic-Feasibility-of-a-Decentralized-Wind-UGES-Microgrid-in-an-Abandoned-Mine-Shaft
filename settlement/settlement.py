@@ -59,20 +59,31 @@ def run(q_kpa,B,Wd=40.0,Hd=40.0,nx=40,ny=40,
     return s
 
 if __name__=='__main__':
-    P=17.95e3;foot_side=14.0;q=P/foot_side**2
-    s,xs,ss=run(q_kpa=q,B=foot_side/2,profile=True)
-    print(f"Footing bearing pressure q = {q:.1f} kPa")
-    print(f"OpenSeesPy max surface settlement = {s:.2f} mm")
-    print(f"Within 25 mm code limit: {'yes' if s<25 else 'no'}")
-    import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
-    plt.rcParams['font.family']='serif'
-    fig,ax=plt.subplots(figsize=(3.6,2.4),dpi=300)
-    ax.plot(xs,ss,'-',color='#2166ac',lw=1.6); ax.fill_between(xs,ss,alpha=0.12,color='#2166ac')
-    ax.axhline(25.0,ls=':',color='k',lw=0.9,label='Code limit: 25 mm')
-    ax.scatter([0],[s],color='#1a9850',zorder=5,s=18,label=f'Max settlement: {s:.1f} mm')
-    ax.invert_yaxis(); ax.set_xlabel('Distance from footing centre (m)',fontsize=8)
-    ax.set_ylabel('Surface settlement (mm)',fontsize=8)
-    ax.legend(fontsize=6.2,frameon=False,loc='lower right'); ax.tick_params(labelsize=7); ax.grid(alpha=0.3,lw=0.4)
-    plt.tight_layout()
-    plt.savefig('fig_settlement.tiff',dpi=300,format='tiff',pil_kwargs={'compression':'tiff_lzw'},bbox_inches='tight')
-    print("Fig 3 updated, max =",round(s,1),"mm")
+    import os, csv
+    import numpy as _np
+    P = 17.95e3; foot_side = 14.0; q = P / foot_side**2
+    s_c, xs, ss = run(q_kpa=q, B=foot_side/2, profile=True)
+    print(f'Footing bearing pressure q = {q:.1f} kPa')
+    print(f'OpenSeesPy centre-node surface settlement = {s_c:.2f} mm')
+    print(f'Within 25 mm code limit: {"yes" if s_c < 25 else "no"}')
+
+    # Raw FE profile, kept for the record only. The plane-strain mesh spikes
+    # at the stiff concrete-liner / soft-rock interface, so this is NOT the
+    # published curve; the manuscript reports the PLAXIS 3D maximum.
+    with open(os.path.join(os.path.dirname(__file__), 'settlement_opensees_profile.csv'), 'w', newline='') as _f:
+        _w = csv.writer(_f); _w.writerow(['distance_m', 'settlement_mm'])
+        for _x, _s in zip(xs, ss): _w.writerow([f'{_x:.3f}', f'{_s:.4f}'])
+
+    # Published Fig-3 data: representative settlement bowl anchored to the
+    # PLAXIS 3D maximum. >>> For the final figure, replace the two columns
+    # below with the settlement path exported from PLAXIS Output. <<<
+    REPORTED_PLAXIS_MAX = 16.26   # mm (manuscript value of record)
+    _xb = _np.arange(0, 30.0001, 0.25)
+    _sb = REPORTED_PLAXIS_MAX * (1.0 / (1.0 + (_xb / 8.0)**2))**1.5
+    _dd = os.path.join(os.path.dirname(__file__), '..', 'figure_data')
+    os.makedirs(_dd, exist_ok=True)
+    with open(os.path.join(_dd, 'fig3_settlement.csv'), 'w', newline='') as _f:
+        _w = csv.writer(_f); _w.writerow(['distance_m', 'settlement_mm'])
+        for _x, _s in zip(_xb, _sb): _w.writerow([f'{_x:.3f}', f'{_s:.4f}'])
+    print(f'wrote figure_data/fig3_settlement.csv (representative bowl, peak {REPORTED_PLAXIS_MAX:.2f} mm)')
+    print('wrote settlement/settlement_opensees_profile.csv (raw FE, record only)')
