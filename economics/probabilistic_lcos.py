@@ -6,7 +6,7 @@ Turns the deterministic point-estimate economics into a probabilistic result:
   - Sobol global sensitivity indices (which inputs drive LCOS variance)
 
 Open-source: numpy (MC) + SALib (Sobol). Uses the validated common.py engine, so
-the deterministic centre reproduces the manuscript's 18.56 PKR/kWh.
+the deterministic centre reproduces the manuscript's 18.82 PKR/kWh.
 
 Input uncertainty ranges are engineering judgement [A] and flagged; the point of
 the analysis is the RANKING of drivers and the spread, both robust to the exact
@@ -75,7 +75,7 @@ pr_npv_pos  = float((npv_mc>0).mean())
 np10,np50,np90 = np.percentile(npv_mc/1e6,[10,50,90])
 
 print("=== PROBABILISTIC LCOS / NPV (Monte-Carlo, N=60000) ===")
-print(f"LCOS  P10/P50/P90 : {p10:.2f} / {p50:.2f} / {p90:.2f} PKR/kWh (det. 18.56)")
+print(f"LCOS  P10/P50/P90 : {p10:.2f} / {p50:.2f} / {p90:.2f} PKR/kWh (det. 18.82)")
 print(f"NPV   P10/P50/P90 : {np10:.0f} / {np50:.0f} / {np90:.0f} M PKR")
 print(f"Pr(NPV > 0)       : {pr_npv_pos*100:.1f}%")
 print("\n=== SOBOL SENSITIVITY (LCOS) ===")
@@ -88,7 +88,8 @@ fig, ax = plt.subplots(1,2, figsize=(12,4.4))
 ax[0].hist(lcos_mc, bins=60, color="#4C78A8", alpha=0.85, edgecolor="w", linewidth=0.2)
 for p,l,c in [(p10,"P10","#59A14F"),(p50,"P50","#000000"),(p90,"P90","#E15759")]:
     ax[0].axvline(p, color=c, ls="--", lw=1.3, label=f"{l}={p:.1f}")
-ax[0].axvline(18.56, color="orange", lw=1.6, label="deterministic 18.56")
+ax[0].axvline(C.LCOS_REPORTED_PKR_KWH, color="orange", lw=1.6,
+              label=f"deterministic {C.LCOS_REPORTED_PKR_KWH:.2f}")
 ax[0].set_xlabel("LCOS (PKR/kWh)"); ax[0].set_ylabel("frequency")
 ax[0].set_title("Monte-Carlo LCOS distribution"); ax[0].legend(fontsize=8)
 

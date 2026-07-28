@@ -13,7 +13,7 @@ Monte Carlo adds percentile bands. p values are ILLUSTRATIVE, swept; the
 claimed result is the structural ordering, not a point prediction.
 
 Part 2 - Islanding endurance: full piston = 1.083 MWh (validated single-cycle
-capacity). Hourly wind sampled from the site Weibull (k=2.6, c=8.1 at 100 m)
+capacity). Hourly wind sampled from the site Weibull (k=2.17, c=7.72 at 100 m)
 with AR(1) persistence rho=0.85 (Gaussian copula); simplified power curve of
 one 2.5 MW Class II-A turbine (cut-in 3, rated 12, cut-out 25 m/s). Computes
 P(72 h uninterrupted supply) for three representative critical loads, assuming

@@ -72,6 +72,8 @@ idealisation that was driving artificial bearing failure.
 | BESS comparator | 46,343–56,343 tCO₂e | **36,268–46,268 tCO₂e** |
 | Islanding, shed hospital core | 85.3% | **77.7%** |
 | LCOS P10/P50/P90 (PKR kWh⁻¹) | 15.4 / 19.2 / 23.8 | **15.3 / 19.0 / 23.5** |
+| LCOS deterministic (base 14%) | 18.56 PKR kWh⁻¹ | **18.82 PKR kWh⁻¹** |
+| LCOS at 12% / 16% | 16.41 / 20.77 | **16.57 / 21.11** |
 | NPV P10/P50/P90 (M PKR) | −8 / 657 / 1,402 | **+19 / 688 / 1,437** |
 | Pr(NPV > 0) | 89.7% | **90.8%** |
 
@@ -79,7 +81,7 @@ idealisation that was driving artificial bearing failure.
 
 The storage results do not depend on wind yield and are carried through intact:
 round-trip efficiency **84.97%**, **17,337.5 MWh** discharged per year, **46 strokes/day**
-on a **1.083 MWh** cycle, deterministic base-case **NPV +722 M PKR**, **IRR 19.3%**. The
+on a **1.083 MWh** cycle, deterministic base-case **NPV +727 M PKR**, **IRR 19.3%**. The
 storage-only embodied-carbon ratio against an equal-service battery remains **1.6–5.8×**,
 and the critical-mineral result is unchanged: **zero lithium and zero graphite** against
 roughly 17 t and 180 t for the LFP equivalent.
@@ -101,6 +103,13 @@ roughly 17 t and 180 t for the LFP equivalent.
   `CP_REGION2`, `SPECIFIC_POWER_W_M2`.
 
 ## Changed
+
+- **Financial figures now reproduce from the shipped code.** v1.x reported LCOS
+  18.56 PKR kWh⁻¹ and NPV +722 M PKR, neither of which follows from the stated CAPEX
+  (2,069.3 M PKR), throughput (17,337.5 MWh yr⁻¹), 14% discount rate, 30-year life, 1%
+  O&M and 5% salvage. `common.lcos_pkr_per_kwh()` returns **18.82** and
+  `common.npv_pkr()` returns **+727 M PKR** from those inputs; the manuscript now
+  matches the code.
 
 - Monte-Carlo availability sampled **0.92–0.98**, centred on the 0.95 design point
   (previously 0.90–0.98, which biased the median low).

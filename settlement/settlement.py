@@ -27,7 +27,7 @@ B = L = 14.0                     # [L] square mat, m
 q = FOOTING_LOAD_MN*1e3 / (B*L)  # [D] bearing pressure, kPa  -> 91.6 kPa
 H_OVER = 5.0                     # [L] compressible overburden thickness, m
 E_OVER, NU_OVER = 50e3, 0.30     # [L] overburden E' (kPa), nu
-E_ROCK, NU_ROCK = 4.0e6, 0.25    # [L] sandstone-shale rock-mass E_rm = 4.0 GPa, nu
+E_ROCK, NU_ROCK = 0.25e6, 0.25   # [L] rock-mass E_rm = 0.25 GPa (regional analog), nu
 GAM_OVER, C_OVER, PHI_OVER = 20.0, 5.0, 28.0   # [L] kN/m3, kPa, deg (drained)
 DF = 0.0                         # [A] surface mat, no embedment credit
 CODE_LIMIT_MM = 25.0             # [L] industrial building-code allowable

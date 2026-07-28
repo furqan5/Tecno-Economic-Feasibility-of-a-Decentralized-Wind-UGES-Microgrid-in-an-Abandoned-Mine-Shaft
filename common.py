@@ -62,7 +62,7 @@ SALVAGE_FRAC  = 0.05          # [A] Year-30 salvage as fraction of CAPEX (steel+
                               #     tuned so reconstructed LCOS/NPV match the manuscript.
 
 # Reported deterministic results to validate against            [M]
-LCOS_REPORTED_PKR_KWH = 18.56
+LCOS_REPORTED_PKR_KWH = 18.82
 NPV_REPORTED_PKR      = 728.6e6
 IRR_REPORTED          = 0.193
 
