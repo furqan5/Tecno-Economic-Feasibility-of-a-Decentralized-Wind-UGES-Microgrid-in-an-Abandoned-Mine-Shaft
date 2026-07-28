@@ -1,0 +1,14 @@
+{
+  "E_cyc_design_MWh": 1.082,
+  "N_max_design": 46,
+  "Q_day_design_MWh": 49.8,
+  "depth_cutoff_m": 300.0,
+  "target_day_MWh": 50.0,
+  "groups": [
+    "E_cyc=m g h_stroke eta/3.6e9",
+    "N_max=floor(T/t_cycle)",
+    "Q_day=N_max*E_cyc",
+    "Gamma=Q_day/E_curtailed",
+    "N_c=E_target/E_cyc"
+  ]
+}

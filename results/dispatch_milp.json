@@ -1,0 +1,29 @@
+{
+  "naive_threshold": {
+    "revenue": 24846.077699999998,
+    "cycles": 0.9217917335276987,
+    "e_dis": 0.9983004474104977
+  },
+  "milp_no_wear": {
+    "revenue": 200539.56729303833,
+    "cycles": 20.740314058171744,
+    "e_dis": 22.461760124999998
+  },
+  "milp_wear_aware": {
+    "revenue": 200539.56729303833,
+    "cycles": 20.740314058171744,
+    "e_dis": 22.461760124999998,
+    "wear_cost": 345.6719009695291
+  },
+  "milp_merchant_annual_MPKR": 69.5,
+  "manuscript_ppa_annual_MPKR": 433.4,
+  "merchant_to_ppa_ratio": 0.16,
+  "N_cyc_base": 3000000.0,
+  "assumptions": [
+    "ToU price profile [A]",
+    "curtailment windows [A]",
+    "rope-set cost 50M PKR [A]",
+    "endurance 3e6 cycles [A]"
+  ],
+  "flag": "merchant ToU value << manuscript flat-tariff PPA value; state market framing"
+}

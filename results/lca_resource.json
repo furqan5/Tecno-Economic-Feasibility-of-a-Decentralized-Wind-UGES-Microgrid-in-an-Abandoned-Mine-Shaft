@@ -1,0 +1,16 @@
+{
+  "steel_t": 1264.0,
+  "concrete_m3": 2328.0,
+  "concrete_t": 5586.0,
+  "adp_uges_kgSbeq": 14.0,
+  "adp_bess_kgSbeq": 24966.0,
+  "adp_ratio_order_of_magnitude": 1789.0,
+  "graphite_t": 183.0,
+  "lithium_t": 16.7,
+  "cell_copper_t": 300.0,
+  "bess_nameplate_MWh": 55.6,
+  "bess_builds": 3,
+  "functional_unit": "30-yr firm storage service; UGES one build vs LFP 3 builds",
+  "robust_claim": "critical-mineral mass (Li, graphite): UGES uses zero; method-independent",
+  "caveat": "ADP ratio method-mixed (EF2.0 vs CML); order-of-magnitude own-synthesis; no published gravity-vs-battery depletion value"
+}

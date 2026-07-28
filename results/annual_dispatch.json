@@ -1,0 +1,102 @@
+{
+  "annual_discharge_MWh": 17338.0,
+  "strokes_per_day": 46.0,
+  "throughput_MWh_day": 50.0,
+  "wind_charge_fraction_pct": 52.0,
+  "monsoon_wind_pct": 97.0,
+  "winter_wind_pct": 19.0,
+  "charge_from_wind_GWh": 10.6,
+  "charge_from_grid_GWh": 9.8,
+  "exported_surplus_GWh": 16.1,
+  "monthly": [
+    {
+      "month": "Jan",
+      "wind_MWh_day": 80.4,
+      "surplus_MWh_day": 3.7,
+      "wind_charge_pct": 6.0,
+      "exported_MWh_day": 0.0
+    },
+    {
+      "month": "Feb",
+      "wind_MWh_day": 98.7,
+      "surplus_MWh_day": 8.2,
+      "wind_charge_pct": 14.0,
+      "exported_MWh_day": 0.0
+    },
+    {
+      "month": "Mar",
+      "wind_MWh_day": 103.0,
+      "surplus_MWh_day": 8.6,
+      "wind_charge_pct": 15.0,
+      "exported_MWh_day": 0.0
+    },
+    {
+      "month": "Apr",
+      "wind_MWh_day": 183.9,
+      "surplus_MWh_day": 59.3,
+      "wind_charge_pct": 85.0,
+      "exported_MWh_day": 9.4
+    },
+    {
+      "month": "May",
+      "wind_MWh_day": 352.6,
+      "surplus_MWh_day": 164.2,
+      "wind_charge_pct": 100.0,
+      "exported_MWh_day": 105.3
+    },
+    {
+      "month": "Jun",
+      "wind_MWh_day": 358.5,
+      "surplus_MWh_day": 165.7,
+      "wind_charge_pct": 100.0,
+      "exported_MWh_day": 106.8
+    },
+    {
+      "month": "Jul",
+      "wind_MWh_day": 481.7,
+      "surplus_MWh_day": 282.1,
+      "wind_charge_pct": 100.0,
+      "exported_MWh_day": 223.3
+    },
+    {
+      "month": "Aug",
+      "wind_MWh_day": 319.0,
+      "surplus_MWh_day": 130.4,
+      "wind_charge_pct": 100.0,
+      "exported_MWh_day": 71.6
+    },
+    {
+      "month": "Sep",
+      "wind_MWh_day": 218.8,
+      "surplus_MWh_day": 56.8,
+      "wind_charge_pct": 85.0,
+      "exported_MWh_day": 6.7
+    },
+    {
+      "month": "Oct",
+      "wind_MWh_day": 93.1,
+      "surplus_MWh_day": 6.0,
+      "wind_charge_pct": 10.0,
+      "exported_MWh_day": 0.0
+    },
+    {
+      "month": "Nov",
+      "wind_MWh_day": 71.3,
+      "surplus_MWh_day": 0.8,
+      "wind_charge_pct": 1.0,
+      "exported_MWh_day": 0.0
+    },
+    {
+      "month": "Dec",
+      "wind_MWh_day": 86.8,
+      "surplus_MWh_day": 2.6,
+      "wind_charge_pct": 4.0,
+      "exported_MWh_day": 0.0
+    }
+  ],
+  "notes": [
+    "representative-year; monthly means measured (Khan et al. 2021, V80) [L]",
+    "national double-hump demand shape, LPEAK 10 MW [A]",
+    "rep-day under-samples windiest hours; 96.5 GWh net AEP (QBlade curve x measured Weibull) is figure of record"
+  ]
+}

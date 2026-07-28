@@ -22,10 +22,19 @@ MODULES = [
     ("Grid load flow",             "loadflow/loadflow.py"),
     ("Energy-management dispatch", "ems/ems_dispatch.py"),
     ("Shaft settlement",           "settlement/settlement.py"),
+    ("Settlement continuum FE",     "settlement/settlement_fem.py"),
     ("Structural verification",    "structural/structural.py"),
     ("Wire-rope factor of safety", "structural/rope_fos.py"),
     ("Strike survivability",       "resilience/resilience.py"),
     ("Life-cycle assessment",      "lca/lca.py"),
+    ("Wear-aware MILP dispatch",   "dispatch/dispatch_milp.py"),
+    ("Cycle feasibility maps",     "feasibility/feasibility.py"),
+    ("Islanding endurance (ARMA)", "resilience/islanding_arma.py"),
+    ("Resilience valuation (VoR)", "resilience/resilience_valuation.py"),
+    ("Probabilistic LCOS / NPV",   "economics/probabilistic_lcos.py"),
+    ("Full-system + BESS LCA",     "lca/lca_system.py"),
+    ("Annual seasonal dispatch",    "dispatch/annual_dispatch.py"),
+    ("Resource-depletion LCA",      "lca/lca_resource.py"),
 ]
 
 

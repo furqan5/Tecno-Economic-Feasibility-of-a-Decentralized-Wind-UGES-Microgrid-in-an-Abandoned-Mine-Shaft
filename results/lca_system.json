@@ -1,0 +1,35 @@
+{
+  "wind_t": 29601.0,
+  "uges_recycled_t": 2850.0,
+  "uges_virgin_t": 4210.0,
+  "wind_uges_total_t": 32451.0,
+  "bess_nameplate_MWh": 55.6,
+  "bess_builds": 3,
+  "EF_kg_per_kWh": [
+    40.0,
+    60.0,
+    80.0,
+    100.0
+  ],
+  "bess_store_t": [
+    6667.0,
+    10000.0,
+    13333.0,
+    16667.0
+  ],
+  "wind_bess_total_t": [
+    36268.0,
+    39601.0,
+    42934.0,
+    46268.0
+  ],
+  "storage_ratio_range": [
+    1.6,
+    5.8
+  ],
+  "factors": [
+    "wind 11 gCO2/kWh [L IPCC AR6]",
+    "UGES [M]",
+    "BESS EF [L] VERIFY Nat Commun 2024"
+  ]
+}

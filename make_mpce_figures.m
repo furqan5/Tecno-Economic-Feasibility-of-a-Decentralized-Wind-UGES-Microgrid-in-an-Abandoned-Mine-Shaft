@@ -11,8 +11,8 @@
 %  Run the top cell once, then Ctrl+Enter any figure cell.
 %  ------------------------------------------------------------------------
 %  Fig-3 note: figure_data/fig3_settlement.csv currently holds a REPRESENTATIVE
-%  settlement bowl anchored to the PLAXIS 3D maximum. Overwrite its two columns
-%  with the PLAXIS settlement path for the final figure (peak label auto-updates).
+%  settlement bowl anchored to the corrected layered-elastic central value (~6.6 mm). Overwrite its two columns
+%  with a detailed continuum-model settlement path for the final figure (peak label auto-updates).
 %  ========================================================================
 clear; close all; clc;
 
@@ -62,7 +62,7 @@ yline(ax,S_CODE,':','Code allowable, 25 mm','Color',C.grey,'LineWidth',1.4, ...
 plot(ax,xpk,S_MAX,'o','MarkerFaceColor',C.green,'MarkerEdgeColor','w', ...
      'MarkerSize',8,'LineWidth',1.0);
 plot(ax,[xpk xpk+2.3],[S_MAX 21],'-','Color',C.grey,'LineWidth',0.7);
-text(ax,xpk+2.5,21.2,sprintf('Peak %.2f mm (PLAXIS 3D)',S_MAX), ...
+text(ax,xpk+2.5,21.2,sprintf('Peak %.2f mm (layered-elastic)',S_MAX), ...
      'Color',C.green*0.75,'FontSize',FS-1,'FontWeight','bold', ...
      'HorizontalAlignment','left','VerticalAlignment','top');
 set(ax,'YDir','reverse','YLim',[0 27],'XLim',[0 max(x)]);

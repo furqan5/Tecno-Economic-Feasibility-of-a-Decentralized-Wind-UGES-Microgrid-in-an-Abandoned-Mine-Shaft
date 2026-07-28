@@ -1,7 +1,12 @@
-# Numerical models only. Publication figures are produced in MATLAB
-# (make_mpce_figures.m), which reads figure_data/*.csv - no Python plotting.
+# Core numerical models
 numpy>=1.24
+scipy>=1.10
 numpy-financial>=1.0
-pandapower>=2.14
-openseespy>=3.5
+# Original repo modules
+pandapower>=2.14        # loadflow/loadflow.py
+openseespy>=3.5         # structural/structural.py  (settlement.py is now pure-numpy)
 openpyxl>=3.1
+# Added analysis modules
+matplotlib>=3.7         # inline figure output
+pulp>=2.7               # dispatch/dispatch_milp.py  (MILP; CBC bundled)
+SALib>=1.4              # economics/probabilistic_lcos.py  (Sobol sensitivity)

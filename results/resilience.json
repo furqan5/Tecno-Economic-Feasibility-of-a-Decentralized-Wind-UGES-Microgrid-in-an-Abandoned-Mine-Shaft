@@ -1,0 +1,81 @@
+{
+  "survivability_M2": {
+    "BESS_1": 0.04,
+    "UGES_1": 0.902,
+    "UGES_5": 0.98
+  },
+  "islanding": [
+    [
+      "Hospital full",
+      0.5,
+      2.2,
+      0.4
+    ],
+    [
+      "Hospital shed",
+      0.1,
+      10.8,
+      51.8
+    ],
+    [
+      "Forward base",
+      1.5,
+      0.7,
+      0.0
+    ],
+    [
+      "Telecom",
+      0.01,
+      108.3,
+      100.0
+    ]
+  ],
+  "VoR_NPV_MPKR_grid": [
+    [
+      8.4,
+      16.8,
+      33.6,
+      67.3
+    ],
+    [
+      16.8,
+      33.6,
+      67.3,
+      134.5
+    ],
+    [
+      42.0,
+      84.1,
+      168.1,
+      336.3
+    ],
+    [
+      84.1,
+      168.1,
+      336.3,
+      672.5
+    ]
+  ],
+  "VoLL_USD": [
+    1.0,
+    2.0,
+    5.0,
+    10.0
+  ],
+  "outage_h_yr": [
+    50,
+    100,
+    200,
+    400
+  ],
+  "ref_10M_per_yr_NPV_MPKR": 70.0,
+  "lcos_base": 18.82,
+  "lcos_resilience_adjusted": 17.39,
+  "assumptions": [
+    "p_AG=0.8,p_sh=0.05 [A]",
+    "protected load 0.1 MW [A]",
+    "coverage 0.85 [A]",
+    "VoLL 1-10 USD/kWh [L]; PK value UNKNOWN",
+    "outage exposure 50-400 h/yr [A]"
+  ]
+}
