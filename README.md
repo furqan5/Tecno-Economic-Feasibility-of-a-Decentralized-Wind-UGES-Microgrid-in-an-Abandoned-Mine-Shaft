@@ -244,7 +244,7 @@ layered-elastic estimate.
 ## Citation
 
 If you use this code, please cite the associated manuscript and this
-repository's archived release on Zenodo (cite the v1.0.1 version DOI).
+repository's archived release on Zenodo.
 
 ## License
 
