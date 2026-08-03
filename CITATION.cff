@@ -6,8 +6,8 @@ abstract: >-
   paired with a 5 MW Underground Gravity Energy Storage (UGES) retrofit in a
   494 m abandoned coal shaft at Jhimpir, Pakistan. Includes grid load flow,
   energy-management dispatch, shaft-foundation settlement, structural
-  verification, wire-rope sizing, strike survivability, and life-cycle
-  embodied-carbon models.
+  verification, wire-rope sizing, shaft-arrest and emergency-discharge design,
+  strike survivability, and life-cycle embodied-carbon models.
 type: software
 authors:
   - given-names: Furqan
@@ -21,6 +21,7 @@ keywords:
   - long-duration energy storage
   - microgrid
   - techno-economic analysis
+  - energy security
 license: MIT
-version: "2.0.0"
-date-released: "2026-07-28"
+version: "2.1.0"
+date-released: "2026-08-03"

@@ -1,3 +1,102 @@
+# v2.1.0 — Shaft arrest system and emergency discharge
+
+**Release title:** `v2.1.0 — Shaft arrest system and emergency discharge: holding the piston when the headframe is gone`
+
+**Tag:** `v2.1.0`  ·  **Date:** 2026-08-03  ·  **Extends:** v2.0.0 (2026-07-28)
+
+---
+
+## Why this is a minor version
+
+Every v2.0.0 result reproduces unchanged. No existing module, CSV, JSON or
+figure is modified, and no entry point is removed. Four modules are added and
+registered in `run_simulation.py`. Under semantic versioning that is a minor
+bump.
+
+## What this closes
+
+Gravitational storage holds energy in a **suspended** mass. The survivability
+model in v2.0.0 counted buried inventory as surviving a strike on the surface,
+but a strike that destroys the headframe also destroys the rope path that holds
+the piston up: the piston falls 469 m and the entire charge is dissipated as
+heat in the shaft-bottom dampers. The v2.0.0 result was therefore conditional on
+hardware that had not been specified.
+
+This release specifies, sizes and verifies that hardware, and adds a discharge
+path that does not run through the headframe.
+
+## Added
+
+- `arrest/arrest_anchorage.py` — engagement dynamics against the 9–20 m s⁻²
+  shaft safety-catch deceleration band, plus closed-form bearing, shear-transfer
+  and liner-utilisation checks. Writes `results/arrest_anchorage.json` and
+  `figure_data/arrest_design_envelope.csv`.
+- `arrest/ledge_fem.py` — axisymmetric continuum FE of the ledge → liner → rock
+  load path, reusing the 4-node ring-element formulation of
+  `settlement/settlement_fem.py`. Verified against the Lamé thick-walled-cylinder
+  solution. Writes `results/ledge_fem.json` and
+  `figure_data/ledge_sensitivity.csv`.
+- `arrest/jacking_recovery.py` — in-shaft regenerative jacking as the emergency
+  discharge path, with Darcy–Weisbach line losses and Monte-Carlo propagation of
+  the conversion chain. Writes `results/jacking_recovery.json` and
+  `figure_data/jacking_recovery.csv`.
+- `resilience/survivability_arrest.py` — survivability with the per-strike loss
+  probability decomposed into shaft collapse and arrest-system reliability.
+  Writes `results/survivability_arrest.json`,
+  `figure_data/fig12_arrest_reliability.csv` and
+  `figures/fig_arrest_reliability.png`.
+
+## Changed
+
+- `run_simulation.py` — four new modules registered (16 → 20).
+- `README.md`, `CITATION.cff` (2.0.0 → 2.1.0), `requirements.txt` (annotated;
+  **no new dependency** — the new FE reuses numpy + scipy.sparse).
+
+## Results
+
+| Quantity | Value | Note |
+| --- | --- | --- |
+| Arrest design load | 19–30 MN | set by the deceleration limit, not the engagement delay |
+| Per pawl, four-pawl set | 4.7–7.4 MN | |
+| Compliant arrest stroke | 0.60–1.34 m | at 0.5 s engagement delay |
+| Ring-ledge bearing pressure | 12.2 MPa | 15% of the EN 1992-1-1 limit; 6.5× better than four discrete pads |
+| Load shed into rock | ≈49% | before reaching the liner section below the ledge |
+| Liner mean axial stress | 4.6 MPa | 17% utilisation; hand calculation gives 9.1 MPa and is conservative |
+| Liner hoop tension | 0.66 MPa vs 1.67 MPa | margin 2.5, closest check |
+| Rock first yield | 58 × design load | Drucker–Prager, c = 1.0 MPa, φ = 30° |
+| Recovery conversion efficiency | 78% (P10–P90 76–80%) | 0.99 MWh delivered |
+| Endurance at 0.1 MW | 9.9 h | consistent with the 10.8 h calm buffer |
+| Arrest reliability for the 90% headline | R ≥ 0.999 | but a single shaft beats a battery for any R > 0.21 |
+
+## Corrections to an intermediate draft
+
+Numbers circulated before this release were superseded during development and
+should not be quoted:
+
+- **16 MN → 19–30 MN.** The earlier figure predated applying the regulatory
+  deceleration band.
+- **Bearing pad 200 cm² → 371 cm² (steel) / 586–928 cm² (concrete).** The
+  earlier value used a steel allowable at a concrete interface. The two
+  interfaces are now treated separately and a continuous ring ledge is adopted.
+- **Liner peak 6.9 MPa and hoop 1.14 MPa → 4.6 MPa mean and 0.66 MPa hoop.**
+  The earlier values came from a different discretisation and were mesh-dependent
+  artefacts of the corner singularity. The reported quantity is now the
+  converged force resultant.
+- **First yield 19× → 58×.**
+
+## Known limitations
+
+- `arrest/ledge_fem.py` is linear elastic. It does not carry plastic
+  redistribution beyond first yield, it smears four pawls into an axisymmetric
+  ring, and the corner peak it reports is a singularity it cannot resolve.
+- No arrestor of this capacity has been built, and no in-shaft regenerative
+  discharge path has been demonstrated against a 9.78 MN load. Both remain open
+  engineering bottlenecks in the manuscript.
+- Rock-mass cohesion and friction angle are assumed pending site triaxial data,
+  and are swept rather than fixed.
+
+---
+
 # v2.0.0 — Measured-resource rebuild
 
 **Release title:** `v2.0.0 — Measured resource, measured rotor: site wind record, QBlade power curve, and IEC 61400-12-1 density normalisation`

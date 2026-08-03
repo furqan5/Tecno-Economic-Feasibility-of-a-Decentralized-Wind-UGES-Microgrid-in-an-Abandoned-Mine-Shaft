@@ -1,0 +1,55 @@
+{
+  "p_AG": 0.8,
+  "p_collapse": 0.05,
+  "battery_M2_pct": 3.9999999999999982,
+  "reliability_table": [
+    {
+      "R": 1.0,
+      "p_sh_eff": 0.05,
+      "one_shaft_pct": 90.25,
+      "five_shafts_pct": 98.00000000000001
+    },
+    {
+      "R": 0.999,
+      "p_sh_eff": 0.05095,
+      "one_shaft_pct": 90.06959024999999,
+      "five_shafts_pct": 97.96199999999999
+    },
+    {
+      "R": 0.99,
+      "p_sh_eff": 0.05950000000000001,
+      "one_shaft_pct": 88.454025,
+      "five_shafts_pct": 97.62
+    },
+    {
+      "R": 0.95,
+      "p_sh_eff": 0.09750000000000004,
+      "one_shaft_pct": 81.450625,
+      "five_shafts_pct": 96.1
+    },
+    {
+      "R": 0.9,
+      "p_sh_eff": 0.14499999999999996,
+      "one_shaft_pct": 73.10249999999999,
+      "five_shafts_pct": 94.19999999999999
+    },
+    {
+      "R": 0.8,
+      "p_sh_eff": 0.23999999999999994,
+      "one_shaft_pct": 57.76,
+      "five_shafts_pct": 90.39999999999999
+    },
+    {
+      "R": 0.5,
+      "p_sh_eff": 0.525,
+      "one_shaft_pct": 22.5625,
+      "five_shafts_pct": 79.0
+    },
+    {
+      "R": 0.0,
+      "p_sh_eff": 1.0,
+      "one_shaft_pct": 0.0,
+      "five_shafts_pct": 60.0
+    }
+  ]
+}

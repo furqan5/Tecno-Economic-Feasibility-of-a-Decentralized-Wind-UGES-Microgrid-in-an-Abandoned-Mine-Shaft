@@ -35,6 +35,10 @@ MODULES = [
     ("Full-system + BESS LCA",     "lca/lca_system.py"),
     ("Annual seasonal dispatch",    "dispatch/annual_dispatch.py"),
     ("Resource-depletion LCA",      "lca/lca_resource.py"),
+    ("Arrest engagement + anchorage", "arrest/arrest_anchorage.py"),
+    ("Arrest ledge continuum FE",     "arrest/ledge_fem.py"),
+    ("Emergency jacking recovery",    "arrest/jacking_recovery.py"),
+    ("Survivability vs arrest R",     "resilience/survivability_arrest.py"),
 ]
 
 

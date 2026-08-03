@@ -80,6 +80,10 @@ jhimpir_wind_uges/
 ├── settlement/     Headframe-foundation settlement (layered-elastic + axisymmetric FE)
 │   ├── settlement.py
 │   └── settlement_fem.py
+├── arrest/         Shaft arrest system and emergency discharge
+│   ├── arrest_anchorage.py   Engagement dynamics + closed-form anchorage
+│   ├── ledge_fem.py          Axisymmetric continuum FE of the ledge load path
+│   └── jacking_recovery.py   Regenerative jacking discharge, Monte-Carlo
 ├── structural/     Closed-form structural checks + wire-rope factor of safety
 │   ├── structural.py
 │   └── rope_fos.py
@@ -147,6 +151,53 @@ operating base).
 
 **lca/** — Cradle-to-gate embodied-carbon estimate for the dominant materials
 (structural steel, cement) using IPCC GWP-100a characterization factors.
+
+**arrest/arrest_anchorage.py** — Sizes the fail-safe shaft arrest system that
+holds the piston when the hoist-rope path is lost. Gravitational storage holds
+energy in a *suspended* mass, so losing the headframe releases the rope path and
+would drop the piston into the shaft-bottom dampers, dissipating the whole
+charge. This module sweeps engagement delay against the 9–20 m s⁻² deceleration
+band required of shaft safety catches (fall-back arrestors / jack catches,
+ISO 19426 family) and returns the compliant arrest stroke and design load, then
+checks pawl bearing under the EN 1992-1-1 partially-loaded-area limit, shear
+transfer from liner into rock, and liner annulus utilisation.
+
+Key result: the design load is set by the deceleration limit alone; engagement
+delay controls the stroke only.
+
+**arrest/ledge_fem.py** — Axisymmetric continuum FE of the ledge → liner → rock
+load path, using the same 4-node ring-element formulation as
+`settlement/settlement_fem.py` (numpy + scipy.sparse, no new dependency).
+VERIFIED against the Lamé thick-walled-cylinder solution to within 0.01%.
+
+The peak stress at the re-entrant corner of the ledge seat is a linear-elastic
+singularity and is reported but does not converge; the converged quantity is the
+**axial force resultant** carried by the liner annulus. The solve is linear
+elastic, with a Drucker–Prager surface matched to Mohr–Coulomb applied in
+post-processing to give the load factor at first yield. This is the open-source
+stand-in for a PLAXIS axisymmetric bearing run; it does not carry plastic
+redistribution beyond first yield and smears the discrete pawls into a ring.
+
+Key result: about half the design load sheds into the rock before reaching the
+liner, so the closed-form annulus check is conservative by roughly a factor of
+two.
+
+**arrest/jacking_recovery.py** — Emergency discharge after loss of the
+headframe. Sizes a 700 bar jacking circuit that lowers the piston between arrest
+ledges, computes return-line pressure drop from Darcy–Weisbach, and propagates
+the conversion chain through a Monte-Carlo sample so delivered energy and
+islanded endurance come out as distributions.
+
+Key result: return-line loss, not jack capacity, sets the power limit.
+
+**resilience/survivability_arrest.py** — Decomposes the per-strike
+inventory-loss probability into geology and hardware,
+`p_sh = p_collapse + (1 − p_collapse)(1 − R)`, where `R` is arrest-system
+reliability. Reproduces the published survivability figures exactly at `R = 1`,
+then reports the reliability required to hold each claim.
+
+Key result: the ordering of the architectures is far more robust than the
+headline percentage.
 
 ## Requirements
 

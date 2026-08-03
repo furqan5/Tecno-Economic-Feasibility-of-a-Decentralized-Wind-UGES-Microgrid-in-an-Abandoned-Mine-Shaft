@@ -72,7 +72,7 @@ ax.set_xlabel('radial distance from footing centre (m)')
 ax.set_ylabel('surface settlement (mm)')
 ax.legend(fontsize=8.5,loc='center right',framealpha=.95)   # clear of the 25 mm line
 ax.grid(alpha=.25,ls=':')
-plt.tight_layout(); plt.savefig('/home/claude/fig3_settlement.png',dpi=155,bbox_inches='tight'); plt.close()
+plt.tight_layout(); plt.savefig('/home/',dpi=155,bbox_inches='tight'); plt.close()
 
 # ================= Fig 6: structural FoS, legend off the long bar ================
 rows=list(csv.reader(open('pkg/figure_data/fig6_structural.csv')))[1:]
